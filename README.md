@@ -1,2 +1,2 @@
 # jenkinshooks
-vanilla post-receive hooks in gitlab to trigger jenkins
+vanilla git post-receive hooks in gitlab with configurable jenkins triggers

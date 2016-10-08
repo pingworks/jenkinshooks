@@ -1,0 +1,18 @@
+---
+defaults:
+  repo_base_url: http://gitlab.infra.svc.cluster.local
+  repo_base_ssh: ssh://git@gitlab.infra.svc.cluster.local:10022
+hooks:
+- repo: demo/phonebook-frontend
+  jenkins_jobs:
+  - job: frontend
+    jenkins_url: http://jenkins.demo.svc.cluster.local
+    token: sometoken 
+- repo: demo/phonebook-backend
+  jenkins_jobs:
+  - job: backend
+    jenkins_url: http://jenkins.demo.svc.cluster.local
+    token: sometoken 
+  - job: backend-sonar
+    jenkins_url: http://jenkins.demo.svc.cluster.local
+    token: sometoken 

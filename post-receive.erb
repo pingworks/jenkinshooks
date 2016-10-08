@@ -1,0 +1,28 @@
+#!/bin/bash
+while read oldrev newrev refname
+do
+    # echo "oldrev: $oldrev"
+    # echo "sha1: $newrev"
+    # echo "refname: $refname"
+
+    # branch=$(git rev-parse --symbolic --abbrev-ref $refname)
+
+    <% hook['jenkins_jobs'].each do |job| %>
+    # job: <%= job['job'] %>
+    jenkins_url_hr="<%= job['jenkins_url'] %>/job/<%= job['job'] %>/buildWithParameters?version=${newrev}"
+    jenkins_url="${jenkins_url_hr}&token=<%= job['token'] %>"
+
+    echo "Triggering Jenkins Job <%= job['job'] %> at URL:"
+    echo "$jenkins_url_hr"
+    curl -sS -i "$jenkins_url" > /tmp/curl_output 2>&1
+    if [ $? -ne 0 ];then
+      echo "ERROR: Could not trigger jenkins job!"
+      echo "curl output:"
+      cat /tmp/curl_output
+    else
+      echo "Done."
+    fi
+    <% end %>
+
+    [ -f /tmp/curl_output ] && rm /tmp/curl_output
+  done
