@@ -9,7 +9,7 @@ do
 
     <% hook['jenkins_jobs'].each do |job| %>
     # job: <%= job['job'] %>
-    jenkins_url_hr="<%= job['jenkins_url'] %>/job/<%= job['job'] %>/buildWithParameters?version=${newrev}"
+    jenkins_url_hr="<%= job['jenkins_url'] %>/job/<%= job['job'] %>/buildWithParameters?VERSION=${newrev:0:7}"
     jenkins_url="${jenkins_url_hr}&token=<%= job['token'] %>"
 
     echo "Triggering Jenkins Job <%= job['job'] %> at URL:"
