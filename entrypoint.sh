@@ -13,6 +13,9 @@ case ${1} in
     configure_gitlab_shell
     configure_nginx
 
+    # patching gilab to allow shorter passwords
+    sed -i -e 's;config.password_length = .\.\.128;config.password_length = 2..128;' /home/git/gitlab/config/initializers/devise.rb
+
     case ${1} in
       app:start)
         migrate_database
